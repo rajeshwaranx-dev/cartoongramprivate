@@ -13,6 +13,13 @@ from bot import Bot
 from config import ADMINS, CHANNEL_ID, DISABLE_CHANNEL_BUTTON, USER_REPLY_TEXT
 from helper_func import encode
 
+
+# ✅ Handler for non-admin users sending any message/command
+@Bot.on_message(filters.private & ~filters.user(ADMINS) & ~filters.command(['start']))
+async def user_reply(client: Client, message: Message):
+    await message.reply_text(USER_REPLY_TEXT, quote=True, disable_web_page_preview=True)
+
+
 @Bot.on_message(filters.private & filters.user(ADMINS) & ~filters.command(['start','users','broadcast','batch','genlink','stats','auth_secret','deauth_secret', 'auth', 'sbatch', 'exit', 'add_admin', 'del_admin', 'admins', 'add_prem', 'ping', 'restart', 'ch2l', 'cancel']))
 async def channel_post(client: Client, message: Message):
     reply_text = await message.reply_text("Please Wait...! 🫷", quote=True)
@@ -30,7 +37,6 @@ async def channel_post(client: Client, message: Message):
     base64_string = await encode(string)
     link = f"https://t.me/{client.username}?start={base64_string}"
 
-    # ✅ Opens directly in the bot instead of share dialog
     reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("Get Sharable Link", url=link)]])
 
     await reply_text.edit(f"<b>Here is your link :</b>\n{link}", reply_markup=reply_markup, disable_web_page_preview=True)
@@ -43,6 +49,7 @@ async def channel_post(client: Client, message: Message):
         except Exception:
             pass
 
+
 @Bot.on_message(filters.channel & filters.incoming & filters.chat(CHANNEL_ID))
 async def new_post(client: Client, message: Message):
     if DISABLE_CHANNEL_BUTTON:
@@ -52,7 +59,6 @@ async def new_post(client: Client, message: Message):
     base64_string = await encode(string)
     link = f"https://t.me/{client.username}?start={base64_string}"
 
-    # ✅ Opens directly in the bot instead of share dialog
     reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("Get Sharable Link", url=link)]])
 
     try:
