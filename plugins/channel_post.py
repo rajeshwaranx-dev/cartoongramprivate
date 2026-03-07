@@ -35,7 +35,9 @@ async def channel_post(client: Client, message: Message):
     base64_string = await encode(string)
     link = f"https://t.me/{client.username}?start={base64_string}"
 
-    reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("🔁 Share URL", url=f'https://telegram.me/share/url?url={link}')]])
+    reply_markup = InlineKeyboardMarkup([
+    [InlineKeyboardButton("📂 Open File", url=link)]
+])
 
     await reply_text.edit(f"<b> Here is your link :</b>\n{link}", reply_markup=reply_markup, disable_web_page_preview = True)
 
