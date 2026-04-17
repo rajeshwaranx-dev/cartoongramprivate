@@ -4,6 +4,7 @@ from bot import Bot
 from database.database import add_db_channel, remove_db_channel, get_db_channels
 from config import OWNER_ID
 
+
 @Bot.on_message(filters.private & filters.user(OWNER_ID) & filters.command("addgroup"))
 async def add_channel(client: Client, message: Message):
     if len(message.command) < 2:
@@ -20,6 +21,7 @@ async def add_channel(client: Client, message: Message):
     except Exception as e:
         await message.reply(f"❌ Error: {e}")
 
+
 @Bot.on_message(filters.private & filters.user(OWNER_ID) & filters.command("removegroup"))
 async def remove_channel(client: Client, message: Message):
     if len(message.command) < 2:
@@ -35,6 +37,7 @@ async def remove_channel(client: Client, message: Message):
     except Exception as e:
         await message.reply(f"❌ Error: {e}")
 
+
 @Bot.on_message(filters.private & filters.user(OWNER_ID) & filters.command("listgroup"))
 async def list_channels(client: Client, message: Message):
     channels = getattr(client, 'db_channels', [])
@@ -43,3 +46,4 @@ async def list_channels(client: Client, message: Message):
         return
     text = "\n".join(f"• {ch.title} → <code>{ch.id}</code>" for ch in channels)
     await message.reply(f"<b>Registered channels ({len(channels)}):</b>\n{text}")
+    
