@@ -1,12 +1,3 @@
-# ────────────────────────────────────────────────────────────────
-# ✅ THIS PROJECT IS DEVELOPED AND MAINTAINED BY @trinityXmods (TELEGRAM)
-# 🚫 DO NOT REMOVE OR ALTER THIS CREDIT LINE UNDER ANY CIRCUMSTANCES.
-# ⭐ FOR MORE HIGH-QUALITY OPEN-SOURCE BOTS, FOLLOW US ON GITHUB.
-# 🔗 OFFICIAL GITHUB: https://github.com/Trinity-Mods
-# 📩 NEED HELP OR HAVE QUESTIONS? REACH OUT VIA TELEGRAM: @velvetexams
-# ────────────────────────────────────────────────────────────────
-# 🔒 PRIVATE BOT — Creates links only. Does NOT send files to users.
-# ────────────────────────────────────────────────────────────────
 import asyncio
 import base64
 from pyrogram import filters, Client
@@ -35,14 +26,13 @@ async def user_reply(client: Client, message: Message):
     await message.reply_text(USER_REPLY_TEXT, quote=True, disable_web_page_preview=True)
 
 
-@Bot.on_message(filters.private & filters.user(ADMINS) & ~filters.command(['start','users','broadcast','batch','genlink','stats','auth_secret','deauth_secret', 'auth', 'sbatch', 'exit', 'add_admin', 'del_admin', 'admins', 'add_prem', 'ping', 'restart', 'ch2l', 'cancel']))
+@Bot.on_message(filters.private & filters.user(ADMINS) & ~filters.command(['start','users','broadcast','batch','genlink','stats','auth_secret','deauth_secret','auth','sbatch','exit','add_admin','del_admin','admins','add_prem','ping','restart','ch2l','cancel','addgroup','removegroup','listgroup']))
 async def channel_post(client: Client, message: Message):
     if not is_media(message):
         await message.reply_text("❌ Only files/media can be stored.\nPlain text messages are ignored.", quote=True)
         return
 
     reply_text = await message.reply_text("Please Wait...! 🫷", quote=True)
-
     db_channels = getattr(client, 'db_channels', [client.db_channel])
     links = []
 
@@ -99,11 +89,4 @@ async def new_post(client: Client, message: Message):
         await message.edit_reply_markup(reply_markup)
     except Exception:
         pass
-
-# ────────────────────────────────────────────────────────────────
-# ✅ THIS PROJECT IS DEVELOPED AND MAINTAINED BY @trinityXmods (TELEGRAM)
-# 🚫 DO NOT REMOVE OR ALTER THIS CREDIT LINE UNDER ANY CIRCUMSTANCES.
-# ⭐ FOR MORE HIGH-QUALITY OPEN-SOURCE BOTS, FOLLOW US ON GITHUB.
-# 🔗 OFFICIAL GITHUB: https://github.com/Trinity-Mods
-# 📩 NEED HELP OR HAVE QUESTIONS? REACH OUT VIA TELEGRAM: @velvetexams
-# ────────────────────────────────
+    
